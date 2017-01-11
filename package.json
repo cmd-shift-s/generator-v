@@ -1,0 +1,32 @@
+{
+  "name": "generator-v",
+  "version": "1.0.0",
+  "description": "yeoman generator for vue.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "test:watch": "mocha --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gongzza/generator-v.git"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "generator-v"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gongzza/generator-v/issues"
+  },
+  "homepage": "https://github.com/gongzza/generator-v#readme",
+  "dependencies": {
+    "yeoman-generator": "^1.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "yeoman-assert": "^2.2.2",
+    "yeoman-test": "^1.6.0"
+  }
+}
