@@ -7,8 +7,11 @@ module.exports = class extends Generator {
     // Calling the super constructor is important so our generator is correctly set up
     super(args, opts)
 
-    // arguments
-    this.argument('appname', { type: String, required: true })
+    // name을 필수로 받도록 처리
+    this.argument('name', { type: String, required: true })
+
+    // 생성 될 스크립트확장자
+    this.options.suffixScript = '.vue'
   }
 
   initializing() {}
@@ -16,11 +19,11 @@ module.exports = class extends Generator {
   configuring() {}
   default() {}
   writing() {
-    const filename = this.options.appname + '.vue'
+    const filename = this.options.name + this.options.suffixScript
     this.fs.copyTpl(
       this.templatePath('Vue.vue'),
-      this.destinationPath(path.join('src', this.options.appname + '.vue')),
-      { name: this.options.appname }
+      this.destinationPath(path.join('src', filename)),
+      { name: this.options.name}
     )
   }
   conflicts() {}
