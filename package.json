@@ -4,8 +4,9 @@
   "description": "yeoman generator for vue.js",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "test:watch": "mocha --watch"
+    "test": "npm run test:base test/specs/**/*.js",
+    "test:watch": "npm run test --watch",
+    "test:base": "mocha -R spec"
   },
   "repository": {
     "type": "git",
