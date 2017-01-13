@@ -1,24 +1,53 @@
-var Generator = require('yeoman-generator')
-var path = require('path')
+'use strict';
 
-module.exports = class extends Generator {
-  // The name `constructor` is important here
-  constructor(args, opts) {
-    // Calling the super constructor is important so our generator is correctly set up
-    super(args, opts)
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _yeomanGenerator = require('yeoman-generator');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AppGenerator = function (_Base) {
+  _inherits(AppGenerator, _Base);
+
+  function AppGenerator() {
+    _classCallCheck(this, AppGenerator);
+
+    return _possibleConstructorReturn(this, (AppGenerator.__proto__ || Object.getPrototypeOf(AppGenerator)).apply(this, arguments));
   }
 
-  initializing() {
-    // 생성 될 스크립트확장자
-    this.options.suffixScript = '.vue'
-  }
-  prompting() {
+  _createClass(AppGenerator, [{
+    key: 'initializing',
+    value: function initializing() {
+      // 생성 될 스크립트확장자
+      this.options.suffixScript = '.vue';
+    }
+  }, {
+    key: 'prompting',
+    value: function prompting() {}
+  }, {
+    key: 'configuring',
+    value: function configuring() {}
+    // default() {}
 
-  }
-  configuring() {}
-  // default() {}
-  writing() {}
-  conflicts() {}
-  install() {}
-  end() {}
-}
+  }, {
+    key: 'writing',
+    value: function writing() {}
+  }, {
+    key: 'conflicts',
+    value: function conflicts() {}
+  }, {
+    key: 'install',
+    value: function install() {}
+  }, {
+    key: 'end',
+    value: function end() {}
+  }]);
+
+  return AppGenerator;
+}(_yeomanGenerator.Base);
+
+module.exports = AppGenerators;

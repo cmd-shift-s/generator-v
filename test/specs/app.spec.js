@@ -1,7 +1,7 @@
-var helper = require('yeoman-test')
-var assert = require('yeoman-assert')
-var path = require('path')
-var util = require('../util.js')
+import helper from 'yeoman-test'
+import assert from 'yeoman-assert'
+import path from 'path'
+import util from '../util'
 
 const target = 'app'
 const generatorName = util.getGeneratorName(target)
