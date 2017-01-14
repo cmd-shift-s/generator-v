@@ -1,6 +1,6 @@
-import { Base } from 'yeoman-generator'
+import Generator from 'yeoman-generator'
 
-class AppGenerator extends Base {
+class AppGenerator extends Generator {
   initializing() {
     // 생성 될 스크립트확장자
     this.options.suffixScript = '.vue'
@@ -14,4 +14,4 @@ class AppGenerator extends Base {
   end() {}
 }
 
-module.exports = AppGenerators
+module.exports = AppGenerator
