@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test:base test/specs/**/*.js",
-    "test:watch": "npm run test --watch",
     "test:base": "mocha -R spec --compilers js:babel-register",
-    "build": "babel generators/*/index.es6 -d ."
+    "test:watch": "mocha -R spec --compilers js:babel-register --watch test/specs/**/*.js",
+    "build": "babel generators/*/index.es6 -d .",
+    "build:watch": "babel generators/*/index.es6 -d . --watch"
   },
   "repository": {
     "type": "git",
