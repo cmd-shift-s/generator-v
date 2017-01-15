@@ -11,12 +11,13 @@ class ComponentGenerator extends Generator {
       // name을 필수로 받도록 처리
       this.argument('name', { type: String, required: true })
     } catch(err) {
-      this.log.error(usage)
-      process.exit(1)
+      this._printUsage()
+      this.abort = true
     }
   }
 
   initializing() {
+    if (this.abort) return
     // 생성 될 스크립트확장자
     this.options.suffixScript = '.vue'
   }
@@ -24,6 +25,7 @@ class ComponentGenerator extends Generator {
   configuring() {}
   // default() {}
   writing() {
+    if (this.abort) return
     const filename = this.options.name + this.options.suffixScript
     this.fs.copyTpl(
       this.templatePath('Vue.vue'),
@@ -34,6 +36,10 @@ class ComponentGenerator extends Generator {
   conflicts() {}
   install() {}
   end() {}
+
+  _printUsage() {
+    this.log.error('Usage: yo v:comp name')
+  }
 }
 
 module.exports = ComponentGenerator

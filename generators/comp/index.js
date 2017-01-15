@@ -33,8 +33,8 @@ var ComponentGenerator = function (_Generator) {
       // name을 필수로 받도록 처리
       _this.argument('name', { type: String, required: true });
     } catch (err) {
-      _this.log.error(usage);
-      process.exit(1);
+      _this._printUsage();
+      _this.abort = true;
     }
     return _this;
   }
@@ -42,6 +42,7 @@ var ComponentGenerator = function (_Generator) {
   _createClass(ComponentGenerator, [{
     key: 'initializing',
     value: function initializing() {
+      if (this.abort) return;
       // 생성 될 스크립트확장자
       this.options.suffixScript = '.vue';
     }
@@ -56,6 +57,7 @@ var ComponentGenerator = function (_Generator) {
   }, {
     key: 'writing',
     value: function writing() {
+      if (this.abort) return;
       var filename = this.options.name + this.options.suffixScript;
       this.fs.copyTpl(this.templatePath('Vue.vue'), this.destinationPath(_path2.default.join('src', filename)), { name: this.options.name });
     }
@@ -68,6 +70,11 @@ var ComponentGenerator = function (_Generator) {
   }, {
     key: 'end',
     value: function end() {}
+  }, {
+    key: '_printUsage',
+    value: function _printUsage() {
+      this.log.error('Usage: yo v:comp name');
+    }
   }]);
 
   return ComponentGenerator;
