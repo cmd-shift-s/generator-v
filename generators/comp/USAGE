@@ -1,0 +1,9 @@
+Description:
+  컴포넌트와 테스트케이스를 생성합니다.
+
+Example:
+  $ yo v:comp name
+
+  This will create:
+    app/src/components/Name.vue
+    test/specs/components/Name.spec.js

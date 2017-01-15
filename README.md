@@ -33,7 +33,6 @@ $ yo v
 ```
 
 ##### Prompts
-Enter is end
 ```
 source path(./app/src)?
 component members?

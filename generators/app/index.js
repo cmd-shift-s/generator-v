@@ -6,6 +6,14 @@ var _yeomanGenerator = require('yeoman-generator');
 
 var _yeomanGenerator2 = _interopRequireDefault(_yeomanGenerator);
 
+var _rx = require('rx');
+
+var _rx2 = _interopRequireDefault(_rx);
+
+var _inquirer = require('inquirer');
+
+var _inquirer2 = _interopRequireDefault(_inquirer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -17,10 +25,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AppGenerator = function (_Generator) {
   _inherits(AppGenerator, _Generator);
 
-  function AppGenerator() {
+  // The name `constructor` is important here
+  function AppGenerator(args, opts) {
     _classCallCheck(this, AppGenerator);
 
-    return _possibleConstructorReturn(this, (AppGenerator.__proto__ || Object.getPrototypeOf(AppGenerator)).apply(this, arguments));
+    // Calling the super constructor is important so our generator is correctly set up
+    return _possibleConstructorReturn(this, (AppGenerator.__proto__ || Object.getPrototypeOf(AppGenerator)).call(this, args, opts));
   }
 
   _createClass(AppGenerator, [{
@@ -28,27 +38,22 @@ var AppGenerator = function (_Generator) {
     value: function initializing() {
       // 생성 될 스크립트확장자
       this.options.suffixScript = '.vue';
+
+      this.props = {};
     }
   }, {
     key: 'prompting',
-    value: function prompting() {}
-  }, {
-    key: 'configuring',
-    value: function configuring() {}
-    // default() {}
+    value: function prompting() {
+      var self = this;
+      var questions = [{}];
 
-  }, {
-    key: 'writing',
-    value: function writing() {}
-  }, {
-    key: 'conflicts',
-    value: function conflicts() {}
-  }, {
-    key: 'install',
-    value: function install() {}
-  }, {
-    key: 'end',
-    value: function end() {}
+      var observable = _rx2.default.Observable.fromArray(questions);
+      return _inquirer2.default.prompt(observable).ui.process.subscribe(function (ans) {
+        self.props[ans.name] = ans.answer;
+      }, function (err) {}, function () {
+        // TODO Save config
+      });
+    }
   }]);
 
   return AppGenerator;

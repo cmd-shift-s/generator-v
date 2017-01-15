@@ -29,13 +29,49 @@ var ComponentGenerator = function (_Generator) {
     // Calling the super constructor is important so our generator is correctly set up
 
 
+    _this.option('skip-import', {
+      description: 'component를 생성할 때 import 구문을 넣지 않습니다.',
+      type: Boolean,
+      alias: 'si',
+      default: false
+    });
+
+    _this.option('skip-member', {
+      description: '옵션으로 지정한 맴버들을 추가하지 않는다. 단, 파라메터로 넘겨주는 맴버들은 추가한다.',
+      type: Boolean,
+      alias: 'sm',
+      default: false
+    });
+
+    _this.option('skip-life-cycle', {
+      description: '옵션으로 지정한 life-cycle 메소드들을 추가하지 않는다. 단, 파라메터로 넘겨주는 매소드들은 추가한다.',
+      type: Boolean,
+      alias: 'slc',
+      default: false
+    });
+
+    _this.option('skip-test', {
+      description: '테스트 케이스를 생성하지 않습니다.',
+      type: Boolean,
+      alias: 'st',
+      default: false
+    });
+
+    _this.option('skip-test-import', {
+      description: '테스트 케이스를 생성하면서 import 구문을 넣지 않습니다.',
+      type: Boolean,
+      alias: 'sti',
+      default: false
+    });
+
     try {
       // name을 필수로 받도록 처리
       _this.argument('name', { type: String, required: true });
     } catch (err) {
-      _this._printUsage();
+      _this.log.error(_this.help());
       _this.abort = true;
     }
+
     return _this;
   }
 
@@ -70,11 +106,6 @@ var ComponentGenerator = function (_Generator) {
   }, {
     key: 'end',
     value: function end() {}
-  }, {
-    key: '_printUsage',
-    value: function _printUsage() {
-      this.log.error('Usage: yo v:comp name');
-    }
   }]);
 
   return ComponentGenerator;

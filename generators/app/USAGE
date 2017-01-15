@@ -1,0 +1,51 @@
+Description:
+  파일 생성에 필요한 정보를 물어봅니다.
+
+  입력받은 정보를 `.yo-rc.json`에 저장합니다.
+
+Example:
+  $ yo v
+  source path(./app/src)?
+  component members?
+  o el
+  o templates
+  o props
+  o data
+  o computed
+  o methods
+  o components
+  life cycles?
+  o created
+  o beforeMount
+  o mounted
+  o beforeUpdate
+  o updated
+  o beforeDestroy
+  o destroyed
+  tempate lang?
+  o html
+  o pug
+  o jade
+  style lang?
+  o css
+  o sass
+  o scss
+  append style scoped(Y/n)?
+  default imports?
+  o vue
+  Enter your imports(ex:import Vue from 'vue'):
+  test specs path(./test/unit/specs)?
+  default imports?
+  o vue
+  o axios
+  o axios-mock-adapter
+  o should
+  o expect
+  o chai
+  o sinon
+  o should-sinon
+  o chai-sinon
+  Enter your imports(ex:import Vue from 'vue')?
+
+  This will create or modify:
+    .yo-rc.json
