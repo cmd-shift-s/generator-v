@@ -9,18 +9,19 @@ describe(target, () => {
   describe('with prompts', () => {
     var gen
     const props = {
+      useSemi: false,
       useImport: true,
       srcPath: 'src',
       suffixScript: '.vue',
-      members: ['props', 'data', 'methods', 'computed', 'components'],
+      members: ['methods', 'computed', 'components'],
       srcUserImports: [],
       templateLang: ['html'],
       styleLang: ['css'],
       styleScoped: true,
-      testSpecPath: 'test/spec',
-      testAssertion: 'should',
-      testSuffixScript: ".spec.js",
-      testUserImports: []
+      testSpecPath: './test/spec',
+      testSuffixScript: '.spec.js',
+      testUserImports: [],
+      testUserCtor: 'const Ctor = Vue.extend'
     }
 
     beforeEach(() => {

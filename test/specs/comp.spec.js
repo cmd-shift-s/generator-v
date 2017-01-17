@@ -7,9 +7,9 @@ const target = 'comp'
 const config = util.localConfig
 describe(target, () => {
   const generatorName = util.getGeneratorName(target)
-  const name = 'mock'
-  const srcfile = path.join(config.srcPath, name + config.suffixScript)
-  const specfile = path.join(config.testSpecPath, name + config.testSuffixScript)
+  const name = 'Mock'
+  const srcfile = path.join(config.srcPath, 'components', name + config.suffixScript)
+  const specfile = path.join(config.testSpecPath, 'components', name + config.testSuffixScript)
 
   describe('with name', () => {
     beforeEach(() => {
@@ -21,6 +21,8 @@ describe(target, () => {
     it('create file with content', () => {
       assert.file([srcfile, specfile])
       assert.fileContent(srcfile, `${name}Component`)
+
+      const semi = (config.useSemi)? ';' : ''
 
       // template lang
       assert.fileContent(srcfile, `<template lang="${config.templateLang}">`)
@@ -34,17 +36,27 @@ describe(target, () => {
 
       // src user imports
       for (let userImport of config.srcUserImports) {
-        assert.fileContent(srcfile, userImport)
-      }
-
-      // test assertion
-      if (config.testAssertion === 'should') {
-        assert.fileContent(specfile, 'vm.$el.textContent.should.be.equal(text)')
+        const [name, path] = userImport.split(':')
+        if (config.useImport) {
+          assert.fileContent(srcfile, `import ${name} from '${path}'${semi}`)
+        } else {
+          assert.fileContent(srcfile, `var ${name} = require('${path}')${semi}`)
+        }
       }
 
       // test user imports
       for (let userImport of config.testUserImports) {
-        assert.fileContent(specfile, userImport)
+        const [name, path] = userImport.split(':')
+        if (config.useImport) {
+          assert.fileContent(specfile, `import ${name} from '${path}'${semi}`)
+        } else {
+          assert.fileContent(specfile, `var ${name} = require('${path}')${semi}`)
+        }
+      }
+
+      // test user contructor
+      if (config.testUserCtor) {
+        assert.fileContent(specfile, `${config.testUserCtor}(${name})${semi}`)
       }
     })
   })

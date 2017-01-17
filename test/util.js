@@ -5,16 +5,17 @@ exports.getGeneratorName = function getGeneratorName(name) {
 }
 
 exports.localConfig = {
+  useSemi: false,
   useImport: true,
-  suffixScript: '.vue',
-  testSuffixScript: '.spec.js',
   srcPath: 'src',
-  lifeCycle: ['beforeMount'],
-  members: ['props', 'data', 'methods', 'computed', 'components'],
+  suffixScript: '.vue',
+  members: ['methods', 'computed', 'components'],
+  srcUserImports: ['axios:axios'],
   templateLang: ['html'],
   styleLang: ['css'],
   styleScoped: true,
-  srcUserImports: ['import util from \'src/util\'', 'import Hello from \'components/Hello.vue\'', ],
-  testSpecPath: 'test/spec',
-  testUserImports: ['import util from \'src/util\'']
+  testSpecPath: './test/spec',
+  testSuffixScript: '.spec.js',
+  testUserImports: ['util:test/util'],
+  testUserCtor: 'const Ctor = Vue.extend'
 }

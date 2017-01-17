@@ -1,24 +1,19 @@
-<template lang="<%= props.templateLang%>">
+<template lang="<%- props.templateLang%>">
   <div>
-    <%= options.name %>Component
+    <%- options.name %>Component
   </div>
 </template>
 
 <script>
-<% if (!options.skipImport) { %>
-<%   for (let userImport of props.srcUserImports) { %>
-<%-     userImport %>
-<%   } %>
-<% } %>
+<% if (!options.skipImport && props.srcUserImports.length != 0) { for (let userImport of props.srcUserImports) { %>// user imports
+<% const [name, path] = userImport.split(':'); if (props.useImport) { %>import <%-name %> from '<%-path %>'<%- semi %><%} else {%>var <%-name%> = require('<%-path%>')<%- semi %><%}}} %>
 export default {
-<% if (!options.skipMember) { let i = 0; for (let member of props.members) { i++ %>
-<% if (member === 'data') { %>  data() {
+  data() {
     return { }
-  }<% if (i !== props.members.length) {%>,<%}%>
-<%   } else { %>
-  <%- member %>: { }<% if (i !== props.members.length) {%>,<%}%><% } %><% }} %>
-}
+  }<% if(!options.skipMember && props.members.length !== 0) {%>,<% let i=0; for (let member of props.members) { i++ %>
+  <%- member %>: { }<% if(i < props.members.length) {%>,<%}}}%>
+}<%- semi %>
 </script>
 
-<style lang="<%= props.styleLang%>"<% if (props.styleScoped) {%> scoped<%} %>>
+<style lang="<%- props.styleLang%>"<% if (props.styleScoped) {%> scoped<%} %>>
 </style>

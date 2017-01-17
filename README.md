@@ -25,6 +25,11 @@ Available generators:
 
 입력받은 정보를 `.yo-rc.json`에 저장합니다.
 
+`.yo-rc.json`의 내용은 언제든지 바꾸실 수 있습니다.<br>
+사용자로부터 입력받지 않는 내용도 있습니다.
+- suffixScript: .vue
+- testSuffixScript: .spec.js
+
 ##### Example:
 ``` bash
 $ yo v
@@ -32,13 +37,11 @@ $ yo v
 
 ##### Prompts
 ```
+use semi-colon(y/N)?
 use import(Y/n)?
-source path(./app/src)?
+Enter source path(./app/src):
 component members?
-o el
-o templates
 o props
-o data
 o computed
 o methods
 o components
@@ -51,22 +54,25 @@ style lang?
 o sass
 o scss
 append style scoped(Y/n)?
-Enter your imports(ex:import Vue from 'vue'):
-test specs path(./test/unit/specs)?
-use assertion?
-> should
-o expect
-o expect.js
-Enter your imports(ex:import Vue from 'vue')?
+ex) vue[:vue] -> import vue from 'vue' or var vue = require('vue'):
+Enter your src imports(ex: vue[:vue])
+Enter test specs path(./test/unit/specs):
+ex) vue[:vue] -> import vue from 'vue' or var vue = require('vue'):
+ex) var Ctor = Vue.extend -> var Ctor = Vue.extend(Name)
+Enter your constructor:
 ```
 
 <a name="component"></a>
 ### Component
 컴포넌트와 테스트케이스를 생성합니다.
 
+`data()`멤버는 기본으로 추가되어 있습니다.
+
+`life cycle`은 화면을 이뿌게 뿌리기 힘들어서 추가하지 않았습니다.
+
 ##### Example:
 ``` bash
-$ yo v:comp name
+$ yo v:comp Comp
 ```
 
 ##### Options
@@ -75,28 +81,32 @@ $ yo v:comp name
 - --skip-test: 테스트 케이스를 생성하지 않습니다.
 - --skip-test-import: 테스트 케이스를 생성하면서 import 구문을 넣지 않습니다.
 
-##### Produces `app/src/components/Name.vue`:
+##### Produces `app/src/components/Comp.vue`:
 ``` html
 <template lang="html">
 
 </template>
 <script>
+
 export default {
+  data() {
+    return { }
+  }
 }
 </script>
 <style lang="css" scoped>
 </style>
 ```
 
-##### Produces `app/test/unit/specs/components/Name.spec.js`:
+##### Produces `app/test/unit/specs/components/Comp.spec.js`:
 ``` js
-import Name from 'src/components/Name'
-import ...
+import Comp from 'src/components/Comp'
+// user imports
+import Vue from 'vue'
 
-const target = 'Name'
-describe(target, () => {
-  it('works', () => {
-    ...
-  })
+describe('Comp.vue', () => {
+  var Ctor = Vue.extend(Comp)
+
+  it('textContent')
 })
 ```

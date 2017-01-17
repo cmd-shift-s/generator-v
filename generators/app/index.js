@@ -38,18 +38,23 @@ var AppGenerator = function (_Generator) {
 
       var questions = [{
         type: 'confirm',
+        name: 'useSemi',
+        message: 'use semicolon?',
+        default: false
+      }, {
+        type: 'confirm',
         name: 'useImport',
         message: 'use import?',
         default: true
       }, {
         type: 'input',
         name: 'srcPath',
-        message: 'source path?',
+        message: 'Enter source path:',
         default: './app/src'
       }, {
         type: 'checkbox',
         name: 'members',
-        choices: ['el', 'template', 'props', 'data', 'computed', 'methods', 'components'],
+        choices: ['props', 'computed', 'methods', 'components'],
         message: 'component members?'
       }, {
         type: 'list',
@@ -71,11 +76,13 @@ var AppGenerator = function (_Generator) {
       }, {
         type: 'input',
         name: 'srcUserImports',
-        message: 'Enter your src imports(ex:import Vue from \'vue\')',
+        message: 'ex) vue[:vue] -> import vue from \'vue\' or var vue = require(\'vue\')\nEnter your src imports(ex: vue[:vue]):',
         validate: function validate(value) {
           if (value.length === 0) {
             return true;
           }
+
+          if (!value.includes(':')) value += ':' + value;
 
           _this2.userImports.src.push(value);
           return '';
@@ -83,25 +90,26 @@ var AppGenerator = function (_Generator) {
       }, {
         type: 'input',
         name: 'testSpecPath',
-        message: 'test specs path?',
+        message: 'Enter test specs path:',
         default: './test/specs'
-      }, {
-        type: 'list',
-        name: 'testAssertion',
-        message: 'use assertion?',
-        choices: ['should', 'expect', 'expect.js']
       }, {
         type: 'input',
         name: 'testUserImports',
-        message: 'Enter your test imports(ex:import Vue from \'vue\')',
+        message: 'ex) vue[:vue] -> import vue from \'vue\' or var vue = require(\'vue\')\nEnter your test imports(ex: vue[:vue]):',
         validate: function validate(value) {
           if (value.length === 0) {
             return true;
           }
 
+          if (!value.includes(':')) value += ':' + value;
+
           _this2.userImports.test.push(value);
           return '';
         }
+      }, {
+        type: 'input',
+        name: 'testUserCtor',
+        message: 'ex) var Ctor = Vue.extend -> Vue.extend(Name)\nEnter your constructor:'
       }];
 
       return this.prompt(questions).then(function (answers) {

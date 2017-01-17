@@ -90,12 +90,14 @@ var ComponentGenerator = function (_Generator) {
     value: function writing() {
       if (this.abort) return;
 
+      var semi = this.props.useSemi ? ';' : '';
+
       var filename = this.options.name + this.props.suffixScript;
-      this.fs.copyTpl(this.templatePath('Vue.vue'), this.destinationPath(_path2.default.join(this.props.srcPath, 'components', filename)), { props: this.props, options: this.options });
+      this.fs.copyTpl(this.templatePath('Vue.vue'), this.destinationPath(_path2.default.join(this.props.srcPath, 'components', filename)), { props: this.props, options: this.options, semi: semi });
 
       if (!this.options.skipTest) {
         var specfilename = this.options.name + this.props.testSuffixScript;
-        this.fs.copyTpl(this.templatePath('specs/Vue.spec.js'), this.destinationPath(_path2.default.join(this.props.testSpecPath, 'components', specfilename)), { props: this.props, options: this.options });
+        this.fs.copyTpl(this.templatePath('specs/Vue.spec.js'), this.destinationPath(_path2.default.join(this.props.testSpecPath, 'components', specfilename)), { props: this.props, options: this.options, semi: semi });
       }
     }
   }, {

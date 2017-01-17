@@ -1,34 +1,9 @@
-<% if (!options.skipTestImport) { %>
-<% if (props.useImport) { %>
-import Vue from 'vue'
-import path from 'path'
-import <%= options.basename %> from 'components/<%= options.name %>'
-<% if (props.testAssertion !== '') { %>import <%- props.testAssertion %> from '<%- props.testAssertion %>'<% } %>
-<% } else { %>
-var Vue = require('vue')
-var path = require('path')
-var <%= options.basename %> = require('components/<%= options.name %>')
-<% if (props.testAssertion !== '') { %>var <%- props.testAssertion %> = require('<%- props.testAssertion %>')<% } %>
-<% } %>
-<% for (let userImport of props.testUserImports) { %>
-<%- userImport %><% } %>
-<% } %>
+<% if (props.useImport) { %>import <%- options.basename %> from 'components/<%- options.name %><%- props.suffixScript %>'<%- semi %><%} else {%>var <%- options.basename %> = require('components/<%- options.name %><%- props.suffixScript %>')<%- semi %><%}%>
+<% if (!options.skipTestImport && props.testUserImports.length != 0) {%>// user imports<% for (let userImport of props.testUserImports) { %>
+<% const [name, path] = userImport.split(':'); if (props.useImport) { %>import <%-name %> from '<%-path %>'<%- semi %><%} else {%>var <%-name%> = require('<%-path%>')<%- semi %><%}}} %>
 
-const target = '<%= options.name%>'
-describe(target, () => {
-  const Ctor = Vue.extend(<%= options.basename %>)
-  it('textContent', () => {
-    const text = '<%= options.basename %>Component'
-    const vm = new Ctor({
-      el: document.createElement('div')
-    }).$mount()
+describe('<%- options.name%>.vue', () => {
+  <%- props.testUserCtor %>(<%- options.basename %>)<%- semi %>
 
-    <% if (props.testAssertion == 'should') { %>
-    vm.$el.textContent.should.be.equal(text)
-    <% } else if (props.testAssertion == 'expect'){ %>
-    expect(vm.$el.textContent).toEqual(text)
-    <% } else if (props.testAssertion == 'expect.js'){ %>
-    expect(vm.$el.textContent).to.eql(text)
-    <% } %>
-  })
-})
+  it('textContent')<%- semi %>
+})<%- semi %>

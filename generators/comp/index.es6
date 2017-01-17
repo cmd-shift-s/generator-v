@@ -59,11 +59,13 @@ class ComponentGenerator extends Generator {
   writing() {
     if (this.abort) return
 
+    const semi = (this.props.useSemi)? ';' : ''
+
     const filename = this.options.name + this.props.suffixScript
     this.fs.copyTpl(
       this.templatePath('Vue.vue'),
       this.destinationPath(path.join(this.props.srcPath, 'components', filename)),
-      { props: this.props, options: this.options }
+      { props: this.props, options: this.options, semi }
     )
 
     if (!this.options.skipTest) {
@@ -71,7 +73,7 @@ class ComponentGenerator extends Generator {
       this.fs.copyTpl(
         this.templatePath('specs/Vue.spec.js'),
         this.destinationPath(path.join(this.props.testSpecPath, 'components', specfilename)),
-        { props: this.props, options: this.options }
+        { props: this.props, options: this.options, semi }
       )
     }
   }
