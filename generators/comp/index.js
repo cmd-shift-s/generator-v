@@ -95,7 +95,7 @@ var ComponentGenerator = function (_Generator) {
 
       if (!this.options.skipTest) {
         var specfilename = this.options.name + this.props.testSuffixScript;
-        this.fs.copyTpl(this.templatePath('specs/Vue.spec.js'), this.destinationPath(_path2.default.join(this.props.testSpecPath, specfilename)), { props: this.props, options: this.options });
+        this.fs.copyTpl(this.templatePath('specs/Vue.spec.js'), this.destinationPath(_path2.default.join(this.props.testSpecPath, 'components', specfilename)), { props: this.props, options: this.options });
       }
     }
   }, {

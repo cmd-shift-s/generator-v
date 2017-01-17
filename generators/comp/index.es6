@@ -70,7 +70,7 @@ class ComponentGenerator extends Generator {
       const specfilename = this.options.name + this.props.testSuffixScript
       this.fs.copyTpl(
         this.templatePath('specs/Vue.spec.js'),
-        this.destinationPath(path.join(this.props.testSpecPath, specfilename)),
+        this.destinationPath(path.join(this.props.testSpecPath, 'components', specfilename)),
         { props: this.props, options: this.options }
       )
     }
