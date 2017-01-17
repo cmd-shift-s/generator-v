@@ -6,14 +6,6 @@ var _yeomanGenerator = require('yeoman-generator');
 
 var _yeomanGenerator2 = _interopRequireDefault(_yeomanGenerator);
 
-var _rx = require('rx');
-
-var _rx2 = _interopRequireDefault(_rx);
-
-var _inquirer = require('inquirer');
-
-var _inquirer2 = _interopRequireDefault(_inquirer);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,34 +17,130 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AppGenerator = function (_Generator) {
   _inherits(AppGenerator, _Generator);
 
-  // The name `constructor` is important here
-  function AppGenerator(args, opts) {
+  function AppGenerator() {
     _classCallCheck(this, AppGenerator);
 
-    // Calling the super constructor is important so our generator is correctly set up
-    return _possibleConstructorReturn(this, (AppGenerator.__proto__ || Object.getPrototypeOf(AppGenerator)).call(this, args, opts));
+    return _possibleConstructorReturn(this, (AppGenerator.__proto__ || Object.getPrototypeOf(AppGenerator)).apply(this, arguments));
   }
 
   _createClass(AppGenerator, [{
     key: 'initializing',
     value: function initializing() {
-      // 생성 될 스크립트확장자
-      this.options.suffixScript = '.vue';
-
-      this.props = {};
+      this.userImports = {
+        src: [],
+        test: []
+      };
     }
   }, {
     key: 'prompting',
     value: function prompting() {
-      var self = this;
-      var questions = [{}];
+      var _this2 = this;
 
-      var observable = _rx2.default.Observable.fromArray(questions);
-      return _inquirer2.default.prompt(observable).ui.process.subscribe(function (ans) {
-        self.props[ans.name] = ans.answer;
-      }, function (err) {}, function () {
-        // TODO Save config
+      var questions = [{
+        type: 'confirm',
+        name: 'useImport',
+        message: 'use import?',
+        default: true
+      }, {
+        type: 'input',
+        name: 'srcPath',
+        message: 'source path?',
+        default: './app/src'
+      }, {
+        type: 'checkbox',
+        name: 'members',
+        choices: ['el', 'template', 'props', 'data', 'computed', 'methods', 'components'],
+        message: 'component members?'
+      }, {
+        type: 'list',
+        name: 'templateLang',
+        choices: ['html', 'pug', 'jade'],
+        message: 'template lang?',
+        default: 'html'
+      }, {
+        type: 'list',
+        name: 'styleLang',
+        choices: ['css', 'sass', 'scss', 'stylus'],
+        message: 'style lang?',
+        default: 'css'
+      }, {
+        type: 'confirm',
+        name: 'styleScoped',
+        message: 'append style scoped?',
+        default: true
+      }, {
+        type: 'input',
+        name: 'srcUserImports',
+        message: 'Enter your src imports(ex:import Vue from \'vue\')',
+        validate: function validate(value) {
+          if (value.length === 0) {
+            return true;
+          }
+
+          _this2.userImports.src.push(value);
+          return '';
+        }
+      }, {
+        type: 'input',
+        name: 'testSpecPath',
+        message: 'test specs path?',
+        default: './test/specs'
+      }, {
+        type: 'list',
+        name: 'testAssertion',
+        message: 'use assertion?',
+        choices: ['should', 'expect', 'expect.js']
+      }, {
+        type: 'input',
+        name: 'testUserImports',
+        message: 'Enter your test imports(ex:import Vue from \'vue\')',
+        validate: function validate(value) {
+          if (value.length === 0) {
+            return true;
+          }
+
+          _this2.userImports.test.push(value);
+          return '';
+        }
+      }];
+
+      return this.prompt(questions).then(function (answers) {
+        _this2.props = answers;
+
+        _this2.props.srcUserImports = _this2.userImports.src;
+        _this2.props.testUserImports = _this2.userImports.test;
       });
+    }
+  }, {
+    key: 'configuring',
+    value: function configuring() {
+      this.props.suffixScript = '.vue';
+      this.props.testSuffixScript = '.spec.js';
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = Object.keys(this.props)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var key = _step.value;
+
+          this.config.set(key, this.props[key]);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
     }
   }]);
 

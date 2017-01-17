@@ -14,8 +14,6 @@ Run `yo v`, 구성요소를 물어봅니다:
 $ yo v
 ```
 
-<!--
-
 ## Generators
 Available generators:
 * [App](#app)
@@ -34,6 +32,7 @@ $ yo v
 
 ##### Prompts
 ```
+use import(Y/n)?
 source path(./app/src)?
 component members?
 o el
@@ -43,37 +42,21 @@ o data
 o computed
 o methods
 o components
-life cycles?
-o created
-o beforeMount
-o mounted
-o beforeUpdate
-o updated
-o beforeDestroy
-o destroyed
 tempate lang?
-o html
+> html
 o pug
 o jade
 style lang?
-o css
+> css
 o sass
 o scss
 append style scoped(Y/n)?
-default imports?
-o vue
 Enter your imports(ex:import Vue from 'vue'):
 test specs path(./test/unit/specs)?
-default imports?
-o vue
-o axios
-o axios-mock-adapter
-o should
+use assertion?
+> should
 o expect
-o chai
-o sinon
-o should-sinon
-o chai-sinon
+o expect.js
 Enter your imports(ex:import Vue from 'vue')?
 ```
 
@@ -88,31 +71,32 @@ $ yo v:comp name
 
 ##### Options
 - --skip-import: component를 생성할 때 import 구문을 넣지 않습니다.
-- --skip-member: 옵션으로 지정한 맴버들을 추가하지 않는다. 단, 파라메터로 넘겨주는 맴버들은 추가한다.
-- --skip-life-cycle: 옵션으로 지정한 life-cycle 메소드들을 추가하지 않는다. 단, 파라메터로 넘겨주는 매소드들은 추가한다.
+- --skip-member: 옵션으로 지정한 맴버들을 추가하지 않는다.
 - --skip-test: 테스트 케이스를 생성하지 않습니다.
 - --skip-test-import: 테스트 케이스를 생성하면서 import 구문을 넣지 않습니다.
 
 ##### Produces `app/src/components/Name.vue`:
 ``` html
-<template>
+<template lang="html">
 
 </template>
 <script>
 export default {
 }
 </script>
-<style scoped>
+<style lang="css" scoped>
 </style>
 ```
 
 ##### Produces `app/test/unit/specs/components/Name.spec.js`:
 ``` js
-import Name from 'src/components/Name.vue'
+import Name from 'src/components/Name'
 import ...
 
-describe('Name.vue', () => {
-  it('works')
+const target = 'Name'
+describe(target, () => {
+  it('works', () => {
+    ...
+  })
 })
 ```
--->

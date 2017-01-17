@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run test:base test/specs/**/*.js",
     "test:base": "mocha -R spec --compilers js:babel-register",
-    "test:watch": "npm run test:base -- -w test/specs/**/*.js --watch-extensions es6",
+    "test:watch": "npm run test:base -- -w test/specs/**/*.js --watch-extensions es6,vue",
     "build": "babel generators/*/index.es6 -d .",
     "build:watch": "npm run build -- --watch"
   },

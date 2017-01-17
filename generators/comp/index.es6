@@ -21,13 +21,6 @@ class ComponentGenerator extends Generator {
       default: false
     })
 
-    this.option('skip-life-cycle', {
-      description: '옵션으로 지정한 life-cycle 메소드들을 추가하지 않는다. 단, 파라메터로 넘겨주는 매소드들은 추가한다.',
-      type: Boolean,
-      alias: 'slc',
-      default: false
-    })
-
     this.option('skip-test', {
       description: '테스트 케이스를 생성하지 않습니다.',
       type: Boolean,
@@ -55,20 +48,32 @@ class ComponentGenerator extends Generator {
 
   initializing() {
     if (this.abort) return
-    // 생성 될 스크립트확장자
-    this.options.suffixScript = '.vue'
+
+    this.props = this.config.getAll()
+
+    this.options.basename = path.basename(this.options.name)
   }
   prompting() {}
   configuring() {}
   // default() {}
   writing() {
     if (this.abort) return
-    const filename = this.options.name + this.options.suffixScript
+
+    const filename = this.options.name + this.props.suffixScript
     this.fs.copyTpl(
       this.templatePath('Vue.vue'),
-      this.destinationPath(path.join('src', filename)),
-      { name: this.options.name}
+      this.destinationPath(path.join(this.props.srcPath, 'components', filename)),
+      { props: this.props, options: this.options }
     )
+
+    if (!this.options.skipTest) {
+      const specfilename = this.options.name + this.props.testSuffixScript
+      this.fs.copyTpl(
+        this.templatePath('specs/Vue.spec.js'),
+        this.destinationPath(path.join(this.props.testSpecPath, specfilename)),
+        { props: this.props, options: this.options }
+      )
+    }
   }
   conflicts() {}
   install() {}
