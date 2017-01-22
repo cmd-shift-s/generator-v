@@ -1,8 +1,6 @@
 # generator-v
 > Yeoman generator for Vue.js
 
-alias를 걸어 두시면 더욱 편리하게 사용하실 수 있습니다. `alias v='yo v'`
-
 ## Usage
 Install `yo`, `gongzza/generator-v`:
 ``` bash
