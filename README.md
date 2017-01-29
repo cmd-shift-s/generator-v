@@ -1,5 +1,6 @@
 # generator-v
 > Yeoman generator for Vue.js
+[![Build Status](https://travis-ci.org/gongzza/generator-v.svg?branch=master)](https://travis-ci.org/gongzza/generator-v)
 
 ## Usage
 Install `yo`, `gongzza/generator-v`:
